@@ -34,6 +34,16 @@
 		}								\
 	} while (0);
 
+#define pr_err(fmt, ...) \
+	do {		\
+		printf("[Err]" fmt, __VA_ARGS__);\
+	} while(0);
+
+#define pr_info(fmt, ...) \
+	do {		\
+		printf("[Info]" fmt, __VA_ARGS__);\
+	} while(0);
+
 #define EXERCISE(_exer, _file) \
 {	\
 	.exer_num = _exer, \

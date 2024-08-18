@@ -26,27 +26,23 @@ static exercise_info ch4_exercise_infos[CH4_TOTAL_EXER] = {
 
 int main()
 {
-	exercise_info exer = ch4_exercise_infos[EXERCISE_4_13];
-	//char *ex4_2_s[] = { "123.45e-6", "-1.2e-3", "-1.2E3", "-1.2e03"};
-	//char *ex4_2_s[] = { "123.45e-6"};
-	char ex4_3456_s[IDX_MAX_LENGTH] = "12+4*6*2*";
-	char ex4_2_s[IDX_MAX_LENGTH] = "123.45e-6";
-	char ex4_789_s[IDX_MAX_LENGTH];
-	char ex4_12_s[IDX_MAX_LENGTH];
-	char ex4_13_s[IDX_MAX_LENGTH];
-	char *ex4_1_s1, *ex4_1_s2;
+	char *ex4_1_s1, *ex4_1_s2, *ex4_2_s, *ex4_3456_s;
+	char *ex4_789_s, *ex4_12_s, *ex4_13_s;
+	int ret = 0, exer = EXERCISE_4_13;
+	exercise_info *exer_tbl;
 	EX4_10_INPUT_MODE mode;
-	int ret, val;
 	FILE* ptr;
+	int val;
 
-	printf("hello ch4...\n");
+	pr_info("Hi, now in Ch4 exex%d\n", exer);
+	exer_tbl = &ch4_exercise_infos[exer];
 
-	if (!fileOpen(&exer, &ptr)) {
-		printf("[Error] fail to open %s...\n", exer.file_name);
+	if (!fileOpen(exer_tbl, &ptr)) {
+		printf("[Error] fail to open %s...\n", exer_tbl->file_name);
 		return -ENOFILEFOUND;
 	}
 
-	switch (exer.exer_num)
+	switch (exer_tbl->exer_num)
 	{
 		case EXERCISE_4_1:
 			ex4_1_s1 = "apppppppple";
@@ -59,6 +55,8 @@ int main()
 			break;
 
 		case EXERCISE_4_2:
+			ex4_2_s= "123.45e-6";
+
 			ret = EX4_2_main(ex4_2_s);
 			if (ret)
 				goto fail;
@@ -69,6 +67,7 @@ int main()
 		case EXERCISE_4_4:
 		case EXERCISE_4_5:
 		case EXERCISE_4_6:
+			ex4_3456_s = "92+4*6*2*";
 			ret = EX4_3_main(ex4_3456_s);
 			if (ret)
 				goto fail;
@@ -79,9 +78,16 @@ int main()
 		case EXERCISE_4_8:
 		case EXERCISE_4_9:
 			printf("Plz enter str input\n");
+
+			ex4_789_s = (char *) malloc(sizeof(char) * IDX_MAX_LENGTH);
+			if (!ex4_789_s) {
+				ret = -ENULLPTR;
+				goto fail;
+			}
+
 			scanf("%s", ex4_789_s);
 
-			ret = EX4_7_main(ex4_789_s, exer.exer_num);
+			ret = EX4_7_main(ex4_789_s, exer_tbl->exer_num);
 			if (ret)
 				goto fail;
 
@@ -107,6 +113,12 @@ int main()
 			printf("Plz enter int input \n");
 			scanf("%d", &val);
 
+			ex4_12_s = (char *) malloc(sizeof(char) * IDX_MAX_LENGTH);
+			if (!ex4_12_s) {
+				ret = -ENULLPTR;
+				goto fail;
+			}
+
 			ret = EX4_12_main(val, ex4_12_s);
 			if (ret)
 				goto fail;
@@ -116,9 +128,15 @@ int main()
 			break;
 
 		case EXERCISE_4_13:
+			ex4_13_s = (char *) malloc(sizeof(char) * IDX_MAX_LENGTH);
+			if (!ex4_13_s) {
+				ret = -ENULLPTR;
+				goto fail;
+			}
+
 			printf("Plz enter str input \n");
 			scanf("%s", ex4_13_s);
-			printf("Input : ", ex4_12_s);
+			printf("Input : ", ex4_13_s);
 
 			ret = EX4_13_main(ex4_13_s);
 			if (ret)
@@ -136,6 +154,6 @@ int main()
 	return 0;
 
 fail:
-	printf("[Err] Exercise stop!\n");
-	return 0;
+	pr_err("Exercise stop!\n", NULL);
+	return ret;
 };

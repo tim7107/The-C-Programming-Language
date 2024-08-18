@@ -123,4 +123,5 @@
 /* The-C-Programming-Language-Exercise Err num table */
 #define EINVCHARIN	134 /* Invalid char input */
 #define ENOFILEFOUND    135 /* No file found */
+#define ENULLPTR        136 /* Null pointer found */
 #define ESPOP           200 /* Stack empty, no val to pop */

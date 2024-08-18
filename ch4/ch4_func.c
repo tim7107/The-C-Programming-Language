@@ -36,11 +36,11 @@ double atof_EX4_2(char* s, double *val)
 	if (s == NULL)
 		return -EINVCHARIN;
 
-	// check white space
+	/* check white space */
 	while (str_IsWhiteSpace(s, i))
 		i++;
 
-	// check sign
+	/* check sign */
 	if (Is_Digits(s[i]))
 		sign = POSITIVE;
 	else {
@@ -50,13 +50,13 @@ double atof_EX4_2(char* s, double *val)
 		i++;
 	}
 
-	// calculate the integer part				<==== can be replaced by is_Digits?
+	/* calculate the integer part */
 	while (str_IsDigits(s, i)) {
 		retval *= integar_scale;
 		retval += (s[i++] - '0');
 	}
 
-	// Calculate the fractional part
+	/* Calculate the fractional part */
 	if (s[i] == '.') {
 		i++;
 		cur_scale = fragment_scale;
@@ -234,7 +234,12 @@ int do_EX4_3(char* input, int* val) {
 
 	Stack_pop(val);
 
-	return (Stack_isEmpty()) ? ret : -EINVCHARIN;
+	if (!Stack_isEmpty()) {
+		Stack_print();
+		ret = -EINVCHARIN;
+	}
+
+	return ret;
 }
 
 int EX4_3_main(char* input)
@@ -320,7 +325,6 @@ int EX4_12_main(int val, char *s)
 	
 	if (val < 0) {
 		val *= -1;
-		//*ptr++ = '-';
 		*s++ = '-';
 	}
 
@@ -328,6 +332,8 @@ int EX4_12_main(int val, char *s)
 	str_reverse(s);
 
 	printf("val in string is %s\n", s);
+
+	return ret;
 }
 
 int EX4_13_main(char* s)

@@ -223,7 +223,6 @@ void Stack_swap_top_two_ele(void)
 		printf("Stack swap the top two ele fail!\n");
 }
 
-
 /*
  * [Input related]
  * 	- getline
