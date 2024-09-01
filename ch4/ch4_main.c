@@ -34,7 +34,7 @@ int main()
 	FILE* ptr;
 	int val;
 
-	pr_info("Hi, now in Ch4 exex%d\n", exer);
+	pr_info("Hi, now in Ch4 exer%d\n", exer);
 	exer_tbl = &ch4_exercise_infos[exer];
 
 	if (!fileOpen(exer_tbl, &ptr)) {

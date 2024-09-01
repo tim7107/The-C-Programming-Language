@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CUR_LEVEL		C_DEBUG
-#define SIN			'~'
-#define EXP			'^'
-#define POW			'$'
-#define TESTLEN			(4)
-
 typedef enum {
 	MODE_GETCH = 0,
 	MODE_GETLINE = 1,

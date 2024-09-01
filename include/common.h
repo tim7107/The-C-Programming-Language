@@ -7,13 +7,21 @@
 #define POSITIVE	(1)
 #define NEGATIVE	(-1)
 #define NOSIGN		(0)
+#define MATCH		1
+#define MISMATCH 	0
+#define EQUAL		0
+#define NEQUAL		1
 
-#define LINE_MAX_LENGTH  (1000)
-#define IDX_MAX_LENGTH   (1000)
+#define STR_MAXLEN  	(1000)
+#define INTMAX_OFFSET	(10)
 
 #define SPACE		' '
-
+#define SIN		'~'
+#define EXP		'^'
+#define POW		'$'
+#define TESTLEN		(4)
 #define LOG_LEVEL	(0)
+#define CUR_LEVEL	C_DEBUG
 
 #define C_PRINTF(level, fmt, ...) \
 	do {					\
@@ -36,13 +44,23 @@
 
 #define pr_err(fmt, ...) \
 	do {		\
-		printf("[Err]" fmt, __VA_ARGS__);\
+		printf("[Err] " fmt, __VA_ARGS__);\
 	} while(0);
 
 #define pr_info(fmt, ...) \
 	do {		\
-		printf("[Info]" fmt, __VA_ARGS__);\
+		printf("[Info] " fmt, __VA_ARGS__);\
 	} while(0);
+
+ #define max(a,b) \
+	({ __typeof__ (a) _a = (a); \
+	   __typeof__ (b) _b = (b); \
+	   _a > _b ? _a : _b; })
+
+ #define min(a,b) \
+	({ __typeof__ (a) _a = (a); \
+	   __typeof__ (b) _b = (b); \
+	   _a < _b ? _a : _b; })
 
 #define EXERCISE(_exer, _file) \
 {	\
@@ -69,12 +87,15 @@ int Is_Digits(int x);
 int Is_Letters(int x);
 int Is_Ascii(int x);
 void itoa_recursive(int n, char* s);
+int atoiP(char *s, int *val);
+int itoaP(int val, char* s);
 
 /* String related */
 int str_IsWhiteSpace(char* s, int idx);
 int str_GetSign(char* s, int idx);
 int str_IsDigits(char* s, int i);
 void str_reverse(char s[]);
+void str_reverseP(char *s);
 void str_reverse_recur(char* s, int left, int right);
 
 /* Stack */

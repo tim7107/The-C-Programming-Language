@@ -5,7 +5,7 @@
 #include "D:\Timkuo\The C new\include\common.h"
 
 int Stack_idx;
-int Stack[IDX_MAX_LENGTH];
+int Stack[STR_MAXLEN];
 
 /* file */
 int fileOpen(exercise_info* exer, FILE** pptr)
@@ -63,6 +63,69 @@ void itoa_recursive(int n, char* s)
 	return;
 }
 
+int atoiP(char *s, int *val)
+{
+	int sign = POSITIVE;
+	int ret = 0, sum = 0;
+
+	while (*s) {
+		if (*s == ' ') {
+			s++;
+			continue;
+		}
+		
+		if (*s == '-') {
+			sign = NEGATIVE;
+			s++;
+			continue;
+		}
+
+		if (*s == '+') {
+			s++;
+			continue;
+		}
+
+		if (*s >= '0' && *s <= '9') {
+			sum = sum * 10 + (*s - '0');
+			s++;
+		} else {
+			pr_err("Invalid char!\n", NULL);
+			ret = -EINVCHARIN;
+		}
+	}
+
+	*val = sum;
+
+	return ret;
+}
+
+int itoaP(int val, char* s)
+{
+	int ret = 0;
+	char *tmp;
+	int c;
+
+	tmp = s;
+
+	if (val < 0) {
+		*s++ = '-';
+		val *= -1;
+	}
+	
+	while (val > 0)
+	{
+		c = val % 10;
+		*s++ = (c + '0');
+
+		val /= 10;
+	}
+	
+	*s = '\0';
+
+	str_reverseP(tmp);
+	return ret;
+}
+
 /* String related */
 int str_IsWhiteSpace(char* s, int idx)
 {
@@ -107,6 +170,29 @@ void str_reverse(char s[])
 	}
 }
 
+void str_reverseP(char *s)
+{
+	char *start, *end;
+	char c;
+
+	start = s;
+	end = s;
+
+	while (*end != '\0')
+		end++;
+
+	end--;
+
+	while (start < end) {
+		c = *start;
+		*start = *end;
+		*end = c;
+
+		end--;
+		start++;
+	}
+}
+
 void str_reverse_recur(char* s, int left, int right)
 {
 	int tmp;
@@ -127,7 +213,7 @@ void str_reverse_recur(char* s, int left, int right)
 void Stack_push(int data) {
 	if ((data > INT_MAX || data < INT_MIN) && data != EOF)
 		return;
-	if (Stack_idx < IDX_MAX_LENGTH)
+	if (Stack_idx < STR_MAXLEN)
 		Stack[++Stack_idx] = data;
 	else
 		C_PRINTF(C_DEBUG, "[%s] Stack Full!!!\n", __FUNCTION__);
@@ -176,7 +262,7 @@ void Stack_show_top(void) {
 }
 
 void Stack_init(void) {
-	memset(Stack, 0, sizeof(sizeof(Stack[0]) * IDX_MAX_LENGTH));
+	memset(Stack, 0, sizeof(sizeof(Stack[0]) * STR_MAXLEN));
 	Stack_idx = -1;
 	printf("Stack init!\n");
 	return;
@@ -195,7 +281,7 @@ void Stack_duplicate(void)
 
 void Stack_clear(void)
 {
-	memset(Stack, 0, sizeof(sizeof(Stack[0]) * IDX_MAX_LENGTH));
+	memset(Stack, 0, sizeof(sizeof(Stack[0]) * STR_MAXLEN));
 	Stack_idx = -1;
 	printf("Stack clear!\n");
 	return;
@@ -241,7 +327,7 @@ int getline_from_txt(FILE** pptr, char* input)
 		return -ENOFILEFOUND;
 	}
 
-	memset(input, 0, sizeof(sizeof(input[0]) * LINE_MAX_LENGTH));
+	memset(input, 0, sizeof(sizeof(input[0]) * STR_MAXLEN));
 	while ((c = fgetc(*pptr)) != EOF && c != '\n')
 		input[idx++] = c;
 

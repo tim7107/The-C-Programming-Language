@@ -124,4 +124,7 @@
 #define EINVCHARIN	134 /* Invalid char input */
 #define ENOFILEFOUND    135 /* No file found */
 #define ENULLPTR        136 /* Null pointer found */
+#define EINVMODE        137 /* Invalid mode */
+#define EINVLEN         138 /* Invalid length */
 #define ESPOP           200 /* Stack empty, no val to pop */
+#define EEXERFAIL       300 /* Exercise fail */
